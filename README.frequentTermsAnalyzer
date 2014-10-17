@@ -1,0 +1,31 @@
+Frequent Terms Analyzer
+
+This simple library discovers terms composed by two or more words which appears a significant amount of times within a given text.
+
+
+About the sample script
+The provided sample script discovers compound terms once provided with a occurrence probability threshold. It also eliminates those grammar elements such as prepositions, articles, verbs and isolated letters at the beginning and end of each term. Please take in consideration that in order to improve its accuracy, the library should be trained with more sample data about as many diverse topics as possible. This would improve the identification of those common words which in general are unspecific and not part of a compound noun (ie. has, been, a, the, this, etc.). All training texts have been acquired from Wikipedia as they are open-source. 
+
+
+Constructor and public methods
+1. public function __construct(&$termsArray, &$excludedWords = array())
+Instantiates the array containing each word from the text as an element. It can also receive a list of words to exclude from 
+both sides of the term as using the trim() function.
+
+2. public function getFrequentWords($threshold = 0.01)
+Obtains a list of frequent single word terms. By default it is considered that a word should be present at least in 1% of the text to be considered as frequent. You might need to fine tune the threshold value according to your available data.
+
+3. public function getCompoundTerms($threshold = 0.001)
+Obtains a list of compound terms, with as many words as the library is able to find in 0,1% of the text.
+Once again, you might need to fine tune the threshold value according to your available data.
+
+Further development
+This first version solves the proposed problem and its good enough to serve my current needs with an acceptable execution time. Having this said, there are at least a couple of things to improve:
+1. Even though I've placed some pointers, passing big data as a reference, the algorithm uses a huge amounts of memory compared to the original data size. This is mainly caused be the usage of arrays to held each word as an element, which in PHP uses quite some memory. A better solution could be to traverse a source string instead of storing single words into an array.
+2. Once discovered two-words common terms, the method analysis1() traverses the original data once again in search of three-words common terms, without considering previous results. Initially I've planned to incrementally use the collected information to take advantage of it during the process, but this also will require a future release to be completed.
+
+Please feel free to improve this small library as much as you like.
+
+
+License
+This development subscribes to GPL license model. If it’s useful to you, just use it leaving a link to Alejandro Mitrou [www.WiseTonic.com] in your acknowledgement page and/or within your documentation. This software is provided as it is, without warranty of any kind express or implied.
